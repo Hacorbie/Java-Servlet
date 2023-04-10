@@ -1,0 +1,18 @@
+package Model;
+
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="Users")
+public class Users {
+	@Id
+	String id;
+	String password;
+	String fullname;
+	String email;
+	Boolean admin = false;
+	@OneToMany(mappedBy = "User")
+	List<Favorites> favorites;
+}

@@ -1,0 +1,25 @@
+package Model;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Video")
+public class Video {
+	@Id
+	String Id;
+	String Title;
+	String Poster;
+	String Description;
+	
+	Boolean Active = true;
+	Integer Views = 0;
+	@OneToMany(mappedBy = "video", fetch = FetchType.EAGER)
+	List<Favorite> Favorites;
+
+}

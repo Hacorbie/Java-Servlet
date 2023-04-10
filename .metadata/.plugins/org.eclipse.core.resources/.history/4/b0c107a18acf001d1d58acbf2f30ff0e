@@ -1,0 +1,31 @@
+package Service;
+import java.util.List;
+
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import Model.Videos;
+
+
+public class RepoImpl implements VideoRepository{
+	 @PersistenceContext
+	    private EntityManager entityManager;
+	
+	@Override
+	public List<Videos> search(String keyword) {
+		 CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+	        CriteriaQuery<Videos> cq = cb.createQuery(Videos.class);
+	        Root<Videos> root = cq.from(Videos.class);
+	        Predicate predicate = cb.or(
+	                cb.like(root.get("title"), "%" + keyword + "%"),
+	                cb.like(root.get("views"), "%" + keyword + "%")
+	        );
+	        cq.where(predicate);
+	        TypedQuery<Videos> query = entityManager.createQuery(cq);
+	        return query.getResultList();
+	}
+
+}

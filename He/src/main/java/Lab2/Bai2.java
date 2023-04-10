@@ -1,0 +1,62 @@
+package Lab2;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Bai2
+ */
+@WebServlet("/Bai2")
+public class Bai2 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Bai2() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.getRequestDispatcher("views/param/formb2.jsp").forward(request, response);
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String seggs = request.getParameter("gt");
+		String qt = request.getParameter("qt");
+		String[] hobbys = request.getParameterValues("hobby");
+		String hobby = "";
+		String gd = request.getParameter("gd");
+		System.out.println(gd);	
+		if(gd == "on") {
+			response.getWriter().write("<h1>da co gd</h1>");
+		}else if(gd == null) {
+			response.getWriter().write("<h1>chua co gd</h1>");
+		}
+		response.getWriter().write("<h1>username:" + username + "</h1>");
+		response.getWriter().write("<h1>password:" + password + "</h1>");
+		response.getWriter().write("<h1>gioi tinh:" + seggs + "</h1>");
+		response.getWriter().write("<h1>qt:" + qt + "</h1>");
+		for (String string : hobbys) {
+			hobby = hobby + string + ", ";
+		}
+		response.getWriter().write("<h1>hobby:" + hobby + "</h1>");
+	}
+
+}

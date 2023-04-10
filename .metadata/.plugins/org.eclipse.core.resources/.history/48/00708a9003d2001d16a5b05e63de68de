@@ -1,0 +1,114 @@
+package Servlet;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.filters.ExpiresFilter.XServletOutputStream;
+
+import Model.Report;
+import Model.Users;
+import Model.Videos;
+
+@WebServlet({"/Lab6", "/SearchVid","/SearchUser","/SearchVidByF","/SearchVidByCount"})
+public class Lab6 extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Lab6() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("MyPersistenceUnit");
+	EntityManager em = emf.createEntityManager();
+
+    public List<Videos> findByTitleContaining(String search) {
+        String query = "SELECT v FROM Videos v WHERE Title LIKE :search";
+        TypedQuery<Videos> typedQuery = em.createQuery(query, Videos.class);
+        typedQuery.setParameter("search", "%" + search + "%");
+        return typedQuery.getResultList();
+    }
+    public List<Users> findByVidId(String search) {
+        String query = "SELECT v.user FROM Favorites v WHERE v.video.id = :vid";
+        TypedQuery<Users> typedQuery = em.createQuery(query, Users.class);
+        typedQuery.setParameter("vid",search);
+        return typedQuery.getResultList();
+    }
+    public List<Videos> findVidByFavour(String favou) {
+        String query;
+        if(favou.equals("yes")) {
+        	query = "SELECT o FROM Videos o WHERE o.Favorites IS NOT EMPTY";
+        	}
+        else {
+        	query = "SELECT o FROM Videos o WHERE o.Favorites IS EMPTY";
+		}
+
+        TypedQuery<Videos> typedQuery = em.createQuery(query, Videos.class);
+        return typedQuery.getResultList();
+    }
+    public List<Report> findByFCContaining() {
+        String query = "SELECT new Report(o.video.title, count(o) "
+        		+ " FROM Favorites o "
+        		+ " GROUP BY o.video.title ";
+        TypedQuery<Report> typedQuery = em.createQuery(query, Report.class);
+        return typedQuery.getResultList();
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+
+	    response.setCharacterEncoding("utf-8");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/views/NewFile.jsp").forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+
+	    response.setCharacterEncoding("utf-8");
+		String uri = request.getRequestURI();
+		
+
+		if(uri.contains("SearchVid")) {
+			String title = request.getParameter("searchvid");
+			List<Videos> videos = findByTitleContaining(title);
+			
+			request.setAttribute("videos", videos);
+		}else if (uri.contains("SearchUser")){
+			String vidid = request.getParameter("searchUserByVid");
+			System.out.println(vidid);
+			List<Users> users = findByVidId(vidid);
+			request.setAttribute("users",users);
+		}else if (uri.contains("SearchVidByF")){
+			String favorite = request.getParameter("thichh");
+			System.out.println(favorite);
+			List<Videos> videobyfs = findVidByFavour(favorite);
+			request.setAttribute("videobyfs",videobyfs);
+		}else if (uri.contains("SearchVidByCount")){
+			List<Report> rps = findByFCContaining();
+			request.setAttribute("rps",rps);
+		}
+        
+		doGet(request, response);
+	}
+
+}

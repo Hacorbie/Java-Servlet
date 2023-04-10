@@ -1,0 +1,19 @@
+package Service;
+import java.util.List;
+
+import javax.persistence.*;
+
+import Model.Videos;
+
+
+public class RepoImpl implements VideoRepository{
+	 @PersistenceContext
+	    private EntityManager entityManager;
+	
+	@Override
+	public List<Videos> search(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

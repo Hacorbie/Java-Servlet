@@ -1,0 +1,25 @@
+package Model;
+
+import java.util.Date;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Favorites", uniqueConstraints={
+@UniqueConstraint(columnNames = {"VidId" , "UserId"})
+})
+
+public class Favorites {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	Long Id;
+	@ManyToOne @JoinColumn(name = "UserId")
+	Users User;
+	@ManyToOne @JoinColumn(name = "VidId")
+	Videos Video;
+	@Temporal(TemporalType.DATE)
+	Date LikeDate = new Date();
+	
+	
+
+	
+}

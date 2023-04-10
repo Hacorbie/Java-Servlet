@@ -1,0 +1,21 @@
+package Model;
+
+import java.util.List;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Videos")
+public class Videos {
+	@Id
+	String Id;
+	String Title;
+	String Poster;
+	String Description;
+	Integer Views = 0;
+	Boolean Active = true;
+	@OneToMany(mappedBy = "Videos")
+	List<Favorites> favorites;
+
+
+}

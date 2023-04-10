@@ -1,0 +1,24 @@
+package Service;
+import java.util.List;
+
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+import Model.Videos;
+
+public class VideoRepositoryImpl implements VideoRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<Videos> findByTitleContaining(String title) {
+        String query = "SELECT v FROM Video v WHERE v.title LIKE :title";
+        TypedQuery<Videos> typedQuery = entityManager.createQuery(query, Videos.class);
+        typedQuery.setParameter("title", "%" + title + "%");
+        return typedQuery.getResultList();
+    }
+}

@@ -1,0 +1,58 @@
+package Model;
+
+import java.sql.Date;
+
+
+import javax.persistence.*;
+
+@Entity
+public class VideoFavor {
+	@Id
+	Long VideoTT;
+	Long FCount;
+	Date LD;
+	Date OD;
+	
+	public Long getVideoTT() {
+		return VideoTT;
+	}
+	public void setVideoTT(Long videoTT) {
+		VideoTT = videoTT;
+	}
+	public Long getFCount() {
+		return FCount;
+	}
+	public void setFCount(Long fCount) {
+		FCount = fCount;
+	}
+	public Date getLD() {
+		return LD;
+	}
+	public void setLD(Date lD) {
+		LD = lD;
+	}
+	public Date getOD() {
+		return OD;
+	}
+	public void setOD(Date oD) {
+		OD = oD;
+	}
+	public VideoFavor(Long videoTT, Long fCount, Date lD, Date oD) {
+		super();
+		VideoTT = videoTT;
+		FCount = fCount;
+		LD = lD;
+		OD = oD;
+	}
+	public VideoFavor() {
+		super();
+	}
+	public VideoFavor(Long videoTT, Long fCount, java.util.Date lD, java.util.Date oD) {
+	    VideoTT = videoTT;
+	    FCount = fCount;
+	    LD = new java.sql.Date(lD.getTime());
+	    OD = new java.sql.Date(oD.getTime());
+	}
+	
+	
+}

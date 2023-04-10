@@ -1,0 +1,29 @@
+package Model;
+
+
+import javax.persistence.*;
+
+@Entity
+public class Report {
+	@Id
+	String groupp;
+	int likes;
+	public String getGroupp() {
+		return groupp;
+	}
+	public void setGroupp(String groupp) {
+		this.groupp = groupp;
+	}
+	public int getLikes() {
+		return likes;
+	}
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+	public Report(String groupp, int likes) {
+		super();
+		this.groupp = groupp;
+		this.likes = likes;
+	}
+	
+}

@@ -1,0 +1,13 @@
+package Model;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "Share", uniqueConstraints={
+@UniqueConstraint(columnNames = {"VidId" , "UserId"})
+})
+public class Share {
+
+}

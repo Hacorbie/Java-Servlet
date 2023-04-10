@@ -1,0 +1,64 @@
+package Model;
+
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+@Entity
+@Table(name = "Share", uniqueConstraints={
+@UniqueConstraint(columnNames = {"VidId" , "UserId"})
+})
+public class Share {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	Integer Id;
+	@ManyToOne @JoinColumn(name = "UserId")
+	User user;
+	@ManyToOne @JoinColumn(name = "VidId")
+	Video video;
+	@Temporal(TemporalType.DATE)
+	Date ShareDate = new Date();
+	String Emails;
+	public Integer getId() {
+		return Id;
+	}
+	public void setId(Integer id) {
+		Id = id;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.users = user;
+	}
+	public Video getVideo() {
+		return video;
+	}
+	public void setVideo(Video video) {
+		this.videos = video;
+	}
+	public Date getShareDate() {
+		return ShareDate;
+	}
+	public void setShareDate(Date shareDate) {
+		ShareDate = shareDate;
+	}
+	public String getEmails() {
+		return Emails;
+	}
+	public void setEmails(String emails) {
+		Emails = emails;
+	}
+	public Share() {
+		super();
+	}
+	
+}

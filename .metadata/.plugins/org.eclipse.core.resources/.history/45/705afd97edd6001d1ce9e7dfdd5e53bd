@@ -1,0 +1,14 @@
+package Model;
+
+import java.sql.Date;
+
+import javax.persistence.Entity;
+
+@Entity
+public class VideoFavor {
+	String VideoTT;
+	Integer FCount;
+	Date LD;
+	Date OD;
+	
+}
